@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduGenie - AI Learning Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+</head>
+<body>
+<main class="container">
+    <section class="card">
+        <h1>EduGenie</h1>
+        <p class="subtitle">Google Gemini Powered Learning Assistant</p>
+
+        <form method="post" action="/run">
+            <label for="task">Choose a task</label>
+            <select id="task" name="task">
+                <option value="qa" {% if selected_task == "qa" %}selected{% endif %}>Question & Answer</option>
+                <option value="explain" {% if selected_task == "explain" %}selected{% endif %}>Explain a Topic</option>
+                <option value="quiz" {% if selected_task == "quiz" %}selected{% endif %}>Generate Quiz</option>
+                <option value="summarize" {% if selected_task == "summarize" %}selected{% endif %}>Summarize</option>
+                <option value="learn" {% if selected_task == "learn" %}selected{% endif %}>Learning Path</option>
+            </select>
+
+            <label for="text">Enter your question or learning material</label>
+            <textarea id="text" name="text" rows="9" placeholder="Example: Explain the water cycle in simple words.">{{ input_text or "" }}</textarea>
+
+            <button type="submit">Generate</button>
+        </form>
+
+        {% if error %}
+        <div class="error">
+            <strong>Error:</strong>
+            <pre>{{ error }}</pre>
+        </div>
+        {% endif %}
+
+        {% if result %}
+        <div class="result">
+            <h2>Result</h2>
+            <pre>{{ result }}</pre>
+        </div>
+        {% endif %}
+    </section>
+</main>
+</body>
+</html>
